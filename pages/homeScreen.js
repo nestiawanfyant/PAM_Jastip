@@ -34,8 +34,72 @@ const homeScreen = ({ navigation }) => {
         return (
             <ScrollView style={styles.home} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}> 
                 <Header nav={navigation} />
-                
-                <Text> Home Page </Text>
+                <View style={styles.HelloUser}>
+                    <Text style={styles.textHi}>Hi, { nameSession }</Text>
+                    <Text style={styles.textDoing}>Apa yang ingin kamu lakukan hari ini ?</Text>
+                </View>
+                <View style={styles.TitipHistory}>
+                    <Text style={styles.textTitip}>Barang apa yang ingin kamu titipkan ?</Text>
+                    <ScrollView style={styles.Titip} horizontal={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+                        <TouchableOpacity style={styles.cardTitip} onPress={() => navigation.navigate('FromPenitipanRumah')}>
+                            <Image style={styles.iconTitip} source={require('../assets/icon.png')} />
+                            <Text>Rumah</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.cardTitip} onPress={() => navigation.navigate('FromPenitipanPerhiasan')}>
+                            <Image style={styles.iconTitip} source={require('../assets/icon.png')} />
+                            <Text>Perhiasan</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.cardTitip} onPress={() => navigation.navigate('FromPenitipanKendaraan')}>
+                            <Image style={styles.iconTitip} source={require('../assets/icon.png')} />
+                            <Text>Kendaraan</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.cardTitip} onPress={() => navigation.navigate('FromPenitipanBarang')}>
+                            <Image style={styles.iconTitip} source={require('../assets/icon.png')} />
+                            <Text>Barang</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                    <View style={styles.History}>
+                        <Text style={styles.textTitip}>Riwayat Barang yang kamu titipkan</Text>
+                        <View style={styles.history}>
+                            <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
+                                <View style={styles.textCardHistory}>
+                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
+                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
+                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
+                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.cardHistory}>
+                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
+                                <View style={styles.textCardHistory}>
+                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
+                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
+                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
+                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.cardHistory}>
+                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
+                                <View style={styles.textCardHistory}>
+                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
+                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
+                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
+                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.cardHistory}>
+                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
+                                <View style={styles.textCardHistory}>
+                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
+                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
+                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
+                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
             </ScrollView>
         )
     }
