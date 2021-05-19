@@ -13,6 +13,9 @@ import FromPenitipanKendaraan from '../pages/penitipanKendaraan';
 import FromPenitipanBarang from '../pages/penitipanBarang';
 import Profile from '../pages/profile';
 import DashboardAdmin from '../pages/Dashboard/dashboard';
+import dataPengajuan from '../pages/Dashboard/daftarPengajuan';
+import riwayatPenitipan from '../pages/Dashboard/riwayatPenitipan';
+import viewPengajuan from '../pages/Dashboard/viewPengajuan';
 
 const screens = {
     SplaceScreen: {
@@ -77,6 +80,24 @@ const screens = {
     },
     DashboardAdmin: {
         screen: DashboardAdmin,
+        navigationOptions: {
+            headerShown: false,
+        }
+    },
+    dataPengajuan: {
+        screen: dataPengajuan,
+        navigationOptions: {
+            headerShown: false,
+        }
+    },
+    riwayatPenitipan: {
+        screen: riwayatPenitipan,
+        navigationOptions: {
+            headerShown: false,
+        }
+    },
+    viewPengajuan: {
+        screen: viewPengajuan,
         navigationOptions: {
             headerShown: false,
         }
