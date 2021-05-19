@@ -11,7 +11,9 @@ import Header from './component/header'
 
 const homeScreen = ({ navigation }) => {
 
-    const [nameSession, sessionNama] =  useState('');
+    const [nameSession, sessionNama]        =  useState('');
+    const [idSession, setIDSession]         =  useState('');
+    const [dataKendaraan, setDataKendaraan] =  useState([]);    
 
     useEffect(() => {
         AsyncStorage.getItem('sessionNama').then((name) => {
@@ -19,7 +21,26 @@ const homeScreen = ({ navigation }) => {
                 sessionNama(name);
             }
         });
-    }, []);
+        AsyncStorage.getItem('sessionID').then((id) => {
+            if(id){
+                setIDSession(id);
+            }
+        });
+
+        let url = "https://tubes-pam-api.herokuapp.com/api/get/kendaraan/" + idSession;
+
+        fetch(url) 
+        .then(res => res.json())
+        .then( resData => {
+            setDataKendaraan(resData.data);
+            // alert(resData.data);
+        })
+    });
+
+    componentWillMount = async() => {
+        console.log("ComponentDidmount Sedang Berjalan")
+        
+    };
 
     let [fontsLoad] = useFonts({
         'DM-Sans-Bold': require('.././assets/fonts/DMSans-Bold.ttf'),
@@ -61,7 +82,22 @@ const homeScreen = ({ navigation }) => {
                     <View style={styles.History}>
                         <Text style={styles.textTitip}>Riwayat Barang yang kamu titipkan</Text>
                         <View style={styles.history}>
-                            <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+
+                            { 
+                                dataKendaraan.map((datasKendaraan, index) => 
+                                    <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+                                        <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
+                                        <View style={styles.textCardHistory}>
+                                            <Text style={styles.textHistoryTag}>#Kendaraan</Text>
+                                            <Text style={styles.textHistoryTitle}> { datasKendaraan.namaPemilik } </Text>
+                                            <Text style={styles.textHistoryLocation}>{ datasKendaraan.provinsi }, { datasKendaraan.kota }</Text>
+                                            <Text style={styles.textHistoryTime}>Lama Waktu : { datasKendaraan.batasPenitipan } </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                            }
+
+                            {/* <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
                                 <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
                                 <View style={styles.textCardHistory}>
                                     <Text style={styles.textHistoryTag}>#Rumah</Text>
@@ -96,7 +132,7 @@ const homeScreen = ({ navigation }) => {
                                     <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
                                     <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </View>
                 </View>

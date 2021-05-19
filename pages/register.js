@@ -76,7 +76,7 @@ const register = ({ navigation }) => {
             <View style={stylesLogin.footerLogin}>
                 <Text>Sudah punya akun ? 
                 <TouchableOpacity onPress={() => navigation.replace('Login')}>
-                        <Text style={stylesLogin.textMasukButtom}>Daftar</Text>
+                        <Text style={stylesLogin.textMasukButtom}>Login</Text>
                     </TouchableOpacity>
                 </Text>
             </View>

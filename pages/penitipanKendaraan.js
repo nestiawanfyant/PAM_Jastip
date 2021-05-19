@@ -1,6 +1,8 @@
-import React,  { useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native'
+import React,  { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Title, RadioButton, Checkbox } from 'react-native-paper';
+import DatePicker from 'react-native-datepicker'
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 
@@ -9,26 +11,101 @@ import Header from './component/header'
 
 const penitipanKendaraan = ({ navigation }) => {
 
-    const [namaPemilik,     setNamaPemilik]     = useState();
-    const [nikPemilik,      setNikPemilik]      = useState();
-    const [alamatPemilik,   setAlamatPemilik]   = useState();
-    const [noPemilik,       setNoPemilik]       = useState();
-    const [provinsi,        setProvinsi]        = useState();
-    const [kota,            setKota]            = useState();
-    const [kodePos,         setKodePos]         = useState();
-    const [note,            setNote]            = useState();
+    const [userId,          setuserID]          = useState();
+    const [namaPemilik,     setNamaPemilik]     = useState("Nestiawan ferdiyanto");
+    const [nikPemilik,      setNikPemilik]      = useState("238282828832832832");
+    const [alamatPemilik,   setAlamatPemilik]   = useState("Perum Nusantara Permai, Sukabumi");
+    const [noPemilik,       setNoPemilik]       = useState("08123123122323");
+    const [provinsi,        setProvinsi]        = useState("Lampung");
+    const [kota,            setKota]            = useState("Bandar Lampung");
+    const [kodePos,         setKodePos]         = useState("34553");
+    const [note,            setNote]            = useState("barang harus di jaga dengan baik dan sering di panaskam.");
     const [jenisKendaran,   setJenisKendaran]   = useState();
-    const [merekKendaraan,  setMerekKendaraan]  = useState();
-    const [warnaKendaraan,  setWarnaKendaraan]  = useState();
-    const [typeKendaraan,   setTypeKendaraan]   = useState();
-    const [tahunPembuatan,  setTahunPembuatan]  = useState();
-    const [nomorRangka,     setNomorRangka]     = useState();
-    const [nomorMesin,      setNomorMesin]      = useState();
-    const [nomorPlat,       setNomorPlat]       = useState();
-    const [mobil,           setMobil]           = useState(false);
+    const [merekKendaraan,  setMerekKendaraan]  = useState("Honda");
+    const [warnaKendaraan,  setWarnaKendaraan]  = useState("Hitam");
+    const [typeKendaraan,   setTypeKendaraan]   = useState("Brio");
+    const [tahunPembuatan,  setTahunPembuatan]  = useState("2018");
+    const [nomorRangka,     setNomorRangka]     = useState("KJS323DSD93958GHDDF");
+    const [nomorMesin,      setNomorMesin]      = useState("LLKSD332304I85SDDSD");
+    const [nomorPlat,       setNomorPlat]       = useState("BE 33423 AD");
+    const [batasPenitipan,  setBatasPenitipan]  = useState(new Date());
+    const [mobil,           setMobil]           = useState(true);
     const [motor,           setMotor]           = useState(false);
     const [sepeda,          setSepeda]          = useState(false);
     const [checked,         setChecked]         = useState(false);
+    const [validation,      setValidation]      = useState(false);
+    const [loadingBtn,      setLoadingBtn]      = useState(false);
+
+    useEffect( () => {
+
+        AsyncStorage.getItem('sessionID').then((id) => {
+            if(id){
+                setuserID(id);
+            }
+        });
+
+    }, []);
+
+    const pengajuanKendaraan = async() => {
+
+        if(!userId.trim() && !namaPemilik.trim() && !nikPemilik.trim() && !alamatPemilik.trim() && !noPemilik.trim() && !provinsi.trim() && !kota.trim() && !kodePos.trim() && 
+            !note.trim() && !merekKendaraan.trim() && !warnaKendaraan.trim() && !typeKendaraan.trim() && !tahunPembuatan.trim() && !nomorRangka.trim() && !nomorMesin.trim() &&
+            !nomorPlat.trim()){
+
+                setValidation(true);
+                setLoadingBtn(false)
+
+        } else {
+            setValidation(false);
+            setLoadingBtn(true);
+
+            if(mobil == true){
+                setJenisKendaran('mobil');
+            } else if(motor == true) {
+                setJenisKendaran('motor');
+            } else if(sepeda == true){
+                setJenisKendaran('sepeda');
+            }
+
+            await fetch("https://tubes-pam-api.herokuapp.com/api/post/kendaraan", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    "user_id"               : userId,
+                    "namaPemilik"           : namaPemilik,
+                    "NIKPemilik"            : nikPemilik,
+                    "alamatRumah"           : alamatPemilik,
+                    "noTelfon"              : noPemilik,
+                    "provinsi"              : provinsi,
+                    "kota"                  : kota,
+                    "kodePos"               : kodePos,
+                    "jenisKendaraan"        : jenisKendaran,
+                    "tahunKendaraan"        : tahunPembuatan,
+                    "merekKendaraan"        : merekKendaraan,
+                    "warnaKendaraan"        : warnaKendaraan,
+                    "typeKendaraan"         : typeKendaraan,
+                    "nomorRangkaKendaraan"  : nomorRangka,
+                    "nomotMesinKendaraan"   : nomorMesin,
+                    "nomotPlatKendaraan"    : nomorPlat,
+                    "batasPenitipan"        : batasPenitipan,
+                    "catatan"               : note,
+                })
+            }).then(res => res.json())
+            .then(resData => {
+                // alert(resData.message);
+                Alert.alert(
+                    resData.status == true ? "Berhasil" : "Gagal",
+                    resData.message,
+                );
+                setLoadingBtn(false);
+                navigation.navigate('Home');
+            })
+        }
+
+    }
 
     let [fontsLoad] = useFonts({
         'DM-Sans-Bold': require('.././assets/fonts/DMSans-Bold.ttf'),
@@ -52,6 +129,7 @@ const penitipanKendaraan = ({ navigation }) => {
                     </Text>
                     <Text style={styles.noteInfoText}> Note: Silakan isikan data form bedasarkan STNK kendaraan. </Text>                    
 
+                    <Text> { validation == true ? "Silakan Isi semua datanya" : ""} </Text> 
                     <View style={styles.contentForm}>
                         <View style={styles.contentForm}>
                             <TextInput style={styles.textInput} 
@@ -144,6 +222,31 @@ const penitipanKendaraan = ({ navigation }) => {
                                 placeholder="Nomor Plat Kendaraan" 
                                 value={nomorPlat} />
 
+                            <Text> Batas Penitipan </Text>
+                            <DatePicker
+                                style={{width: 200}}
+                                date={batasPenitipan}
+                                mode="date"
+                                placeholder="select date"
+                                format="YYYY-MM-DD"
+                                minDate="2019-05-01"
+                                maxDate="2030-12-30"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                customStyles={{
+                                    dateIcon: {
+                                        position: 'absolute',
+                                        left: 0,
+                                        top: 4,
+                                        marginLeft: 0
+                                    },
+                                    dateInput: {
+                                        marginLeft: 36
+                                    }
+                                }}
+                                onDateChange={(batasPenitipan) => {setBatasPenitipan(batasPenitipan)}}
+                            />
+
                             <TextInput style={[styles.textInput, {textAlignVertical: 'top' }]} 
                                 numberOfLines={4}
                                 multiline={true}
@@ -161,7 +264,7 @@ const penitipanKendaraan = ({ navigation }) => {
                                 <Text style={styles.syaratKetentuanText}> Saya setuju dengan ketentuan dan syarat yang berlaku. </Text>
                             </View>
 
-                            <TouchableOpacity style={styles.ButtonKirim}>
+                            <TouchableOpacity style={styles.ButtonKirim} onPress={ () => { pengajuanKendaraan() } }>
                                 <Text style={styles.TextButtonKirim}>Ajukan Penitipan</Text>
                             </TouchableOpacity>
                         </View>
