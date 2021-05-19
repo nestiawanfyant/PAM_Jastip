@@ -1,13 +1,13 @@
-import React,  {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
-import { Platform, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import { Platform, StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 
 const splaceScreen = ({ navigation }) => {
     let [fontsLoaded] = useFonts({
         'DM-Sans-Bold': require('.././assets/fonts/DMSans-Bold.ttf'),
-        'DM-Sans-Regular': require('.././assets/fonts/DMSans-Regular.ttf'),
+        'DM-Sans-Regular': require('.././assets/fonts/DMSans-Regular.ttf')
     })
 
     useEffect(() => {
@@ -16,13 +16,17 @@ const splaceScreen = ({ navigation }) => {
         }, 2000)
     }, []);
 
-    if(!fontsLoaded){
+    if (!fontsLoaded) {
         return (
             <AppLoading />
         );
     } else {
-        return(
+        return (
             <View style={styles.content}>
+                <Image
+                    source={require('.././assets/logo.png')}
+                    style={{ width: 95, height: 150 }}
+                />
                 <Text style={styles.title}> Jastip </Text>
                 <View style={styles.borderBottomTitle}></View>
                 <Text style={styles.paragraph}> Titip Barangmu tanpa Khawatir akan kehilangan atau kerusakan </Text>
@@ -35,13 +39,13 @@ export default splaceScreen;
 
 const styles = StyleSheet.create({
     content: {
-        flex:1,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: 'DM-Sans-Bold'
     },
     title: {
-        fontSize:55,
+        fontSize: 55,
         color: "#259A62",
         fontWeight: "700",
         marginBottom: 5,
@@ -60,8 +64,8 @@ const styles = StyleSheet.create({
         fontFamily: 'DM-Sans-Regular'
     },
     ButtonStart: {
-        marginTop: 50, 
-        padding: 10, 
+        marginTop: 50,
+        padding: 10,
         borderWidth: 1.3,
         paddingLeft: 30,
         paddingRight: 30,
@@ -74,6 +78,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         letterSpacing: 1.2,
         fontWeight: '600',
-        fontFamily: 'DM-Sans-Regular' 
+        fontFamily: 'DM-Sans-Regular'
     }
 });
