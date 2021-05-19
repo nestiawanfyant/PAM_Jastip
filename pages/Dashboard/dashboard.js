@@ -22,8 +22,109 @@ const dashboard = ({ navigation }) => {
             <ScrollView style={styles.dashboard} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <Header nav={navigation} name="Dashbord Admin" />
 
-                
-                <Text> Dashboard </Text>
+                <View style={styles.viewPengajuan}> 
+                    <Text style={styles.textTitleCard}> Daftar Pengajuan Penitipan </Text>
+                    
+                    <View style={styles.viewCard}>
+                        <View style={styles.textView}>
+                            <Text style={styles.tagText} > Penitipan Barang </Text>
+                            <Text style={styles.infoBarang} > Keyboaard K2 </Text>
+                            <Text style={styles.namaPemilik} > Oleh : Nestiawan Ferdiyanto </Text>
+                            <Text style={styles.lamaPenitipan} > Penitipan Selama 3 Hari </Text>
+                        </View>
+                        <View style={styles.viewButton}>
+                            <TouchableOpacity style={styles.buttonTerima}>
+                                <Text style={styles.textButton}> Terima </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonTolak}>
+                                <Text style={styles.textButton}> Tolak </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonCheck} onPress={ () => { navigation.navigate('viewPengajuan') } }>
+                                <Text style={styles.textButton}> Lihat </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={styles.viewCard}>
+                        <View style={styles.textView}>
+                            <Text style={styles.tagText} > Penitipan Barang </Text>
+                            <Text style={styles.infoBarang} > Keyboaard K2 </Text>
+                            <Text style={styles.namaPemilik} > Oleh : Nestiawan Ferdiyanto </Text>
+                            <Text style={styles.lamaPenitipan} > Penitipan Selama 3 Hari </Text>
+                        </View>
+                        <View style={styles.viewButton}>
+                            <TouchableOpacity style={styles.buttonTerima}>
+                                <Text style={styles.textButton}> Terima </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonTolak}>
+                                <Text style={styles.textButton}> Tolak </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonCheck}>
+                                <Text style={styles.textButton}> Lihat </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={styles.viewCard}>
+                        <View style={styles.textView}>
+                            <Text style={styles.tagText} > Penitipan Barang </Text>
+                            <Text style={styles.infoBarang} > Keyboaard K2 </Text>
+                            <Text style={styles.namaPemilik} > Oleh : Nestiawan Ferdiyanto </Text>
+                            <Text style={styles.lamaPenitipan} > Penitipan Selama 3 Hari </Text>
+                        </View>
+                        <View style={styles.viewButton}>
+                            <TouchableOpacity style={styles.buttonTerima}>
+                                <Text style={styles.textButton}> Terima </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonTolak}>
+                                <Text style={styles.textButton}> Tolak </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonCheck}>
+                                <Text style={styles.textButton}> Lihat </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <TouchableOpacity style={styles.buttonSelengkapnya} onPress={ () => { navigation.navigate('dataPengajuan') }} >
+                        <Text style={styles.textSelengkapnya}> Selengkapnya </Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.viewRiwajatPenitipan}> 
+                    <Text style={styles.textTitleCard}> Daftar Riwayat Penitipan </Text>
+                    
+                    <View style={styles.viewCard}>
+                        <View style={styles.textView}>
+                            <Text style={styles.tagText}> Penitipan Barang </Text>
+                            <Text style={styles.infoBarang}> Keyboaard K2 </Text>
+                            <Text style={styles.namaPemilik}> Oleh : Nestiawan Ferdiyanto </Text>
+                            <Text style={styles.lamaPenitipan}> Penitipan Selama 3 Hari </Text>
+                        </View>
+                        <View style={styles.viewButton}>
+                            <TouchableOpacity style={styles.buttonCheck}>
+                                <Text style={styles.textButton}> Perbaharui </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={styles.viewCard}>
+                        <View style={styles.textView}>
+                            <Text style={styles.tagText}> Penitipan Barang </Text>
+                            <Text style={styles.infoBarang}> Keyboaard K2 </Text>
+                            <Text style={styles.namaPemilik}> Oleh : Nestiawan Ferdiyanto </Text>
+                            <Text style={styles.lamaPenitipan}> Penitipan Selama 3 Hari </Text>
+                        </View>
+                        <View style={styles.viewButton}>
+                            <TouchableOpacity style={styles.buttonCheck}>
+                                <Text style={styles.textButton}> Perbaharui </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <TouchableOpacity style={styles.buttonSelengkapnya}>
+                        <Text style={styles.textSelengkapnya}> Selengkapnya </Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         )
     }
