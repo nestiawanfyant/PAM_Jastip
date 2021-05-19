@@ -40,7 +40,7 @@ const viewhistory = ({ navigation }) => {
                     <Caption style={styles.tagHistory}> #{ navigation.getParam('tag') } </Caption>
                     <Text style={styles.titleHistory}> { dataKendaraan.namaPemilik } </Text>
                     <Text style={styles.duraion}>Durasi Penitipan : { dataKendaraan.batasPenitipan } </Text>
-                    <Text style={styles.address}> { dataKendaraan.alamatRumah } - {dataKendaraan.provinsi} - {dataKendaraan.kota} </Text>
+                    <Text style={styles.duraion}>Alamat :  { dataKendaraan.alamatRumah } - {dataKendaraan.provinsi} - {dataKendaraan.kota} </Text>
                     <Text style={styles.duraion}>Status : { dataKendaraan.status } </Text>
                     <Text style={styles.duraion}>Konfirmasi : { dataKendaraan.confirmed == false ? "Belum Disetujui" : "Telah diSetuji" } </Text>
                     <Text style={styles.duraion}></Text>

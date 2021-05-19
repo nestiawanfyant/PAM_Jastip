@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
@@ -7,6 +7,18 @@ import { useFonts } from 'expo-font';
 import Header from '.././component/header'
 
 const dashboard = ({ navigation }) => {
+
+    const [dataKendaraan, setDataKendaraan] =  useState([]);    
+
+    useEffect(() => {
+        let url = "http://tubes-pam-api.herokuapp.com/api/get/kendaraan";
+
+        fetch(url) 
+        .then(res => res.json())
+        .then( resData => {
+            setDataKendaraan(resData.data);
+        });
+    });
 
     let [fontsLoad] = useFonts({
         'DM-Sans-Bold': require('../.././assets/fonts/DMSans-Bold.ttf'),
@@ -25,65 +37,29 @@ const dashboard = ({ navigation }) => {
                 <View style={styles.viewPengajuan}> 
                     <Text style={styles.textTitleCard}> Daftar Pengajuan Penitipan </Text>
                     
-                    <View style={styles.viewCard}>
-                        <View style={styles.textView}>
-                            <Text style={styles.tagText} > Penitipan Barang </Text>
-                            <Text style={styles.infoBarang} > Keyboaard K2 </Text>
-                            <Text style={styles.namaPemilik} > Oleh : Nestiawan Ferdiyanto </Text>
-                            <Text style={styles.lamaPenitipan} > Penitipan Selama 3 Hari </Text>
-                        </View>
-                        <View style={styles.viewButton}>
-                            <TouchableOpacity style={styles.buttonTerima}>
-                                <Text style={styles.textButton}> Terima </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonTolak}>
-                                <Text style={styles.textButton}> Tolak </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonCheck} onPress={ () => { navigation.navigate('viewPengajuan') } }>
-                                <Text style={styles.textButton}> Lihat </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                    <View style={styles.viewCard}>
-                        <View style={styles.textView}>
-                            <Text style={styles.tagText} > Penitipan Barang </Text>
-                            <Text style={styles.infoBarang} > Keyboaard K2 </Text>
-                            <Text style={styles.namaPemilik} > Oleh : Nestiawan Ferdiyanto </Text>
-                            <Text style={styles.lamaPenitipan} > Penitipan Selama 3 Hari </Text>
-                        </View>
-                        <View style={styles.viewButton}>
-                            <TouchableOpacity style={styles.buttonTerima}>
-                                <Text style={styles.textButton}> Terima </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonTolak}>
-                                <Text style={styles.textButton}> Tolak </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonCheck}>
-                                <Text style={styles.textButton}> Lihat </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                    <View style={styles.viewCard}>
-                        <View style={styles.textView}>
-                            <Text style={styles.tagText} > Penitipan Barang </Text>
-                            <Text style={styles.infoBarang} > Keyboaard K2 </Text>
-                            <Text style={styles.namaPemilik} > Oleh : Nestiawan Ferdiyanto </Text>
-                            <Text style={styles.lamaPenitipan} > Penitipan Selama 3 Hari </Text>
-                        </View>
-                        <View style={styles.viewButton}>
-                            <TouchableOpacity style={styles.buttonTerima}>
-                                <Text style={styles.textButton}> Terima </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonTolak}>
-                                <Text style={styles.textButton}> Tolak </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonCheck}>
-                                <Text style={styles.textButton}> Lihat </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    {
+                        dataKendaraan.slice(0, 5).map((datasKendaraan, index) => 
+                            <View style={styles.viewCard}>
+                                <View style={styles.textView}>
+                                    <Text style={styles.tagText} > Penitipan Kendaraan </Text>
+                                    <Text style={styles.infoBarang} > { datasKendaraan.merekKendaraan } </Text>
+                                    <Text style={styles.namaPemilik} > Oleh : { datasKendaraan.namaPemilik } </Text>
+                                    <Text style={styles.lamaPenitipan} > Batas Penitipan : { datasKendaraan.batasPenitipan } </Text>
+                                </View>
+                                <View style={styles.viewButton}>
+                                    <TouchableOpacity style={styles.buttonTerima}>
+                                        <Text style={styles.textButton}> Terima </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.buttonTolak}>
+                                        <Text style={styles.textButton}> Tolak </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.buttonCheck} onPress={ () => { navigation.navigate('viewPengajuan') } }>
+                                        <Text style={styles.textButton}> Lihat </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        )
+                    }
 
                     <TouchableOpacity style={styles.buttonSelengkapnya} onPress={ () => { navigation.navigate('dataPengajuan') }} >
                         <Text style={styles.textSelengkapnya}> Selengkapnya </Text>

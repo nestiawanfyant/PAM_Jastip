@@ -78,8 +78,7 @@ const homeScreen = ({ navigation }) => {
                         <View style={styles.history}>
 
                             { 
-
-                                (dataKendaraan != null) ? 
+                                (dataKendaraan !== null) ? 
                                     dataKendaraan.map((datasKendaraan, index) => 
                                         <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory', { idKendaraan: datasKendaraan.id, tag: 'kendaraan' }) }}>
                                             <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
@@ -88,10 +87,11 @@ const homeScreen = ({ navigation }) => {
                                                 <Text style={styles.textHistoryTitle}> { datasKendaraan.namaPemilik } </Text>
                                                 <Text style={styles.textHistoryLocation}>{ datasKendaraan.provinsi }, { datasKendaraan.kota }</Text>
                                                 <Text style={styles.textHistoryTime}>Lama Waktu : { datasKendaraan.batasPenitipan } </Text>
+                                                <Text style={styles.textStatus}>Status : { datasKendaraan.status } </Text>
                                             </View>
                                         </TouchableOpacity>
                                     )
-                                : <Text style={styles.alertText}> Kamu Belum Melakukan Penitipan Barang </Text>
+                                : <Text>null</Text>
                             }
                         </View>
                     </View>
@@ -219,6 +219,10 @@ const styles = StyleSheet.create({
     },
     textHistoryTime: {
         marginTop: 10,
+        fontFamily: 'DM-Sans-Regular',
+        marginBottom: 0
+    },
+    textStatus: {
         fontFamily: 'DM-Sans-Regular',
     }
 })
