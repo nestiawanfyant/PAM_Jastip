@@ -33,13 +33,8 @@ const homeScreen = ({ navigation }) => {
         .then(res => res.json())
         .then( resData => {
             setDataKendaraan(resData.data);
-        })
+        });
     });
-
-    componentWillMount = async() => {
-        console.log("ComponentDidmount Sedang Berjalan")
-        
-    };
 
     let [fontsLoad] = useFonts({
         'DM-Sans-Bold': require('.././assets/fonts/DMSans-Bold.ttf'),
@@ -83,55 +78,21 @@ const homeScreen = ({ navigation }) => {
                         <View style={styles.history}>
 
                             { 
-                                dataKendaraan.map((datasKendaraan, index) => 
-                                    <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
-                                        <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                                        <View style={styles.textCardHistory}>
-                                            <Text style={styles.textHistoryTag}>#Kendaraan</Text>
-                                            <Text style={styles.textHistoryTitle}> { datasKendaraan.namaPemilik } </Text>
-                                            <Text style={styles.textHistoryLocation}>{ datasKendaraan.provinsi }, { datasKendaraan.kota }</Text>
-                                            <Text style={styles.textHistoryTime}>Lama Waktu : { datasKendaraan.batasPenitipan } </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                )
-                            }
 
-                            {/* <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
-                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                                <View style={styles.textCardHistory}>
-                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardHistory}>
-                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                                <View style={styles.textCardHistory}>
-                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardHistory}>
-                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                                <View style={styles.textCardHistory}>
-                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardHistory}>
-                                <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                                <View style={styles.textCardHistory}>
-                                    <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                    <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                    <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                    <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                                </View>
-                            </TouchableOpacity> */}
+                                (dataKendaraan != null) ? 
+                                    dataKendaraan.map((datasKendaraan, index) => 
+                                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory', { idKendaraan: datasKendaraan.id, tag: 'kendaraan' }) }}>
+                                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
+                                            <View style={styles.textCardHistory}>
+                                                <Text style={styles.textHistoryTag}>#Kendaraan</Text>
+                                                <Text style={styles.textHistoryTitle}> { datasKendaraan.namaPemilik } </Text>
+                                                <Text style={styles.textHistoryLocation}>{ datasKendaraan.provinsi }, { datasKendaraan.kota }</Text>
+                                                <Text style={styles.textHistoryTime}>Lama Waktu : { datasKendaraan.batasPenitipan } </Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                : <Text style={styles.alertText}> Kamu Belum Melakukan Penitipan Barang </Text>
+                            }
                         </View>
                     </View>
                 </View>
@@ -177,6 +138,17 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         marginBottom: 17,
     },
+    alertText:{
+        display: 'flex',  
+        fontFamily: 'DM-Sans-Regular',
+        fontSize: 16,
+        color: '#882D2D',
+        fontWeight: '600',
+        textAlign: 'center',
+        marginVertical: 20,     
+        alignItems: 'center', 
+        justifyContent: 'center',
+    },
     history: {
         display: 'flex',
         flexDirection: 'row',
@@ -208,7 +180,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     cardHistory: {
-        width: 180,
+        width: '47.2%',
         height: 'auto',
         // backgroundColor: '#e8e8e8',
         borderRadius: 10,
