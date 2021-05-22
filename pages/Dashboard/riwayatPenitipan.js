@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
@@ -8,10 +8,24 @@ import Header from '.././component/header'
 
 const riwayatPenitipan = ({ navigation }) => {
 
+    const [dataKendaraan, setDataKendaraan] =  useState([]); 
+
     let [fontsLoad] = useFonts({
         'DM-Sans-Bold': require('../.././assets/fonts/DMSans-Bold.ttf'),
         'DM-Sans-Regular': require('../.././assets/fonts/DMSans-Regular.ttf'),
     })
+
+    const getData = async() => {
+        fetch("http://tubes-pam-api.herokuapp.com/api/get/kendaraan/proses") 
+        .then(res => res.json())
+        .then( resData => {
+            setDataKendaraan(resData.data);
+        });
+    }
+
+    useEffect(() => {
+        getData();
+    },[]);
     
     if(!fontsLoad){
         return (

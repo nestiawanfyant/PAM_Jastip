@@ -39,7 +39,7 @@ const register = ({ navigation }) => {
             })
         }).then(res => res.json())
         .then(resData => {
-            alert(resData.message + " Silakan Login...");
+            alert(resData.message);
             navigation.replace('Login');
         })
     }

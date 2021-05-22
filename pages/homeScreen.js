@@ -76,7 +76,6 @@ const homeScreen = ({ navigation }) => {
                     <View style={styles.History}>
                         <Text style={styles.textTitip}>Riwayat Barang yang kamu titipkan</Text>
                         <View style={styles.history}>
-
                             { 
                                 (dataKendaraan !== null) ? 
                                     dataKendaraan.map((datasKendaraan, index) => 

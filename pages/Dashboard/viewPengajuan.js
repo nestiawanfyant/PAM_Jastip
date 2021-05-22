@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Caption } from 'react-native-paper';
-import { Platform, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import { Platform, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image, Alert} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 
@@ -8,6 +8,48 @@ import { useFonts } from 'expo-font';
 import Header from '.././component/header'
 
 const viewPengajuan = ({ navigation }) => {
+
+    const [dataKendaraan, setDataKendaraan] =  useState([]); 
+
+    useEffect(() => {
+        let url = "https://tubes-pam-api.herokuapp.com/api/get/kendaraan/view/" + navigation.getParam('id');
+
+        fetch(url) 
+        .then(res => res.json())
+        .then( resData => {
+            setDataKendaraan(resData.data);
+        });
+    });
+
+    const terima = ($id) => {
+        let url = "http://tubes-pam-api.herokuapp.com/api/get/kendaraan/acc/" + $id;
+
+        fetch(url) 
+        .then(res => res.json())
+        .then( resData => {
+            Alert.alert(
+                'Berhasil',
+                resData.message,
+            );
+            
+            navigation.navigate('dataPengajuan', {refresh: true})
+        });
+    }
+
+    const tolak = ($id) => {
+        let url = "http://tubes-pam-api.herokuapp.com/api/get/kendaraan/dec/" + $id;
+
+        fetch(url) 
+        .then(res => res.json())
+        .then( resData => {
+            Alert.alert(
+                'Berhasil',
+                resData.message,
+            );
+            
+            navigation.goBack({ refresh: "true" });
+        });
+    }
 
     let [fontsLoad] = useFonts({
         'DM-Sans-Bold': require('../.././assets/fonts/DMSans-Bold.ttf'),
@@ -25,25 +67,44 @@ const viewPengajuan = ({ navigation }) => {
                 
                 <View style={styles.headerHistory}>
                     <Image style={styles.imgCoverHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                    <Caption style={styles.tagHistory}>#Rumah</Caption>
-                    <Text style={styles.titleHistory}> Rumah Pak Ruslan </Text>
-                    <Text style={styles.duraion}>Durasi Penitipan : 1 Minggu</Text>
-                    <Text style={styles.address}>jl. P. Tirtayasa, Sukabumi, Perum Nusantara Permai</Text>
+                    <Caption style={styles.tagHistory}> #{ navigation.getParam('tag') } </Caption>
+                    <Text style={styles.titleHistory}> { dataKendaraan.namaPemilik } </Text>
+                    <Text style={styles.duraion}>Durasi Penitipan : { dataKendaraan.batasPenitipan } </Text>
+                    <Text style={styles.duraion}>Alamat :  { dataKendaraan.alamatRumah } - {dataKendaraan.provinsi} - {dataKendaraan.kota} </Text>
+                    <Text style={styles.duraion}>Status : { dataKendaraan.status } </Text>
+                    <Text style={styles.duraion}>Konfirmasi : { dataKendaraan.confirmed == false ? "Belum Disetujui" : "Telah diSetuji" } </Text>
+                    <Text style={styles.duraion}></Text>
+
+                    {
+                        (navigation.getParam('tag') == "kendaraan") ?
+                            <View>
+                                <Text style={styles.titleHistory}> Info { navigation.getParam('tag') } </Text>
+                                <Text style={styles.duraion}>Jenis Kendaraan : { dataKendaraan.dataKendaraan } </Text>
+                                <Text style={styles.duraion}>Merek Kendaraan : { dataKendaraan.merekKendaraan } </Text>
+                                <Text style={styles.duraion}>Warna Kendaraan : { dataKendaraan.warnaKendaraan } </Text>
+                                <Text style={styles.duraion}>Type Kendaraan : { dataKendaraan.typeKendaraan } </Text>
+                                <Text style={styles.duraion}>Tahun Kendaraan : { dataKendaraan.tahunKendaraan } </Text>
+                                <Text style={styles.duraion}>Nomor Rangka Kendaraan : { dataKendaraan.nomorRangkaKendaraan } </Text>
+                                <Text style={styles.duraion}>Nomor Mesin Kendaraan : { dataKendaraan.nomotMesinKendaraan } </Text>
+                                <Text style={styles.duraion}>Nomor Plat Kendaraan : { dataKendaraan.nomotPlatKendaraan } </Text>
+                            </View>
+                        : ""
+                    }
                 </View>
                 <View style={styles.deskripsi}>
                     <Text style={styles.titleDeskripsi}> Deskripsi </Text>
                     <Text style={styles.deskripsiContent}>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                        { dataKendaraan.catatan }
                     </Text>
                 </View>
 
                 <View style={styles.cardAcc}>
                     <Text style={styles.textAcc}> Apakah kamu ingin menerima permintaan ini ?  </Text>
                     <View style={styles.button}>
-                        <TouchableOpacity style={styles.buttonTolak}>
+                        <TouchableOpacity style={styles.buttonTolak} onPress={ () => { tolak(dataKendaraan.id) } } >
                             <Text style={styles.textButton}> Tolak </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonTerima}>
+                        <TouchableOpacity style={styles.buttonTerima} onPress={ () => { terima(dataKendaraan.id) } } >
                             <Text style={styles.textButton}> Terima </Text>
                         </TouchableOpacity>
                     </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
@@ -8,10 +8,33 @@ import Header from '.././component/header'
 
 const daftarPengajuan = ({ navigation }) => {
 
+    const [dataKendaraan, setDataKendaraan] =  useState([]); 
+    const [refreshData, setRefreshData] =  useState(); 
+
+    const refresfh = (data) => {
+        setRefreshData(data);
+    }
+
     let [fontsLoad] = useFonts({
         'DM-Sans-Bold': require('../.././assets/fonts/DMSans-Bold.ttf'),
         'DM-Sans-Regular': require('../.././assets/fonts/DMSans-Regular.ttf'),
     })
+
+    const getData = async() => {
+        fetch("http://tubes-pam-api.herokuapp.com/api/get/kendaraan/proses") 
+        .then(res => res.json())
+        .then( resData => {
+            setDataKendaraan(resData.data);
+        });
+    }
+
+    if(navigation.getParam('refresh') == true){
+        getData();
+    }
+
+    useEffect(() => {
+        getData();
+    },2000);
     
     if(!fontsLoad){
         return (
@@ -24,60 +47,20 @@ const daftarPengajuan = ({ navigation }) => {
 
                 <View style={styles.History}>
                     <View style={styles.history}>
-                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('viewPengajuan') }}>
-                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                            <View style={styles.textCardHistory}>
-                                <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory}>
-                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                            <View style={styles.textCardHistory}>
-                                <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory}>
-                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                            <View style={styles.textCardHistory}>
-                                <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory}>
-                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                            <View style={styles.textCardHistory}>
-                                <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory}>
-                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                            <View style={styles.textCardHistory}>
-                                <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory}>
-                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                            <View style={styles.textCardHistory}>
-                                <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                <Text style={styles.textHistoryTime}>Durasi : 1 Minggu</Text>
-                            </View>
-                        </TouchableOpacity>
+
+                        {
+                            dataKendaraan.map((datasKendaraan, index) => 
+                                <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('viewPengajuan', {id: datasKendaraan.id, tag: "kendaraan" }) }}>
+                                    <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
+                                    <View style={styles.textCardHistory}>
+                                        <Text style={styles.textHistoryTag}>#Kendaraan</Text>
+                                        <Text style={styles.textHistoryTitle}>{ datasKendaraan.namaPemilik }</Text>
+                                        <Text style={styles.textHistoryLocation}>{ datasKendaraan.provinsi }, { datasKendaraan.kota }</Text>
+                                        <Text style={styles.textHistoryTime}>Lama Penitipan : { datasKendaraan.batasPenitipan }</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }
                     </View>
                 </View>
             </ScrollView>
