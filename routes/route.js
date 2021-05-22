@@ -16,6 +16,7 @@ import DashboardAdmin from '../pages/Dashboard/dashboard';
 import dataPengajuan from '../pages/Dashboard/daftarPengajuan';
 import riwayatPenitipan from '../pages/Dashboard/riwayatPenitipan';
 import viewPengajuan from '../pages/Dashboard/viewPengajuan';
+import viewPembaruan from '../pages/Dashboard/viewPembaruan';
 
 const screens = {
     SplaceScreen: {
@@ -98,6 +99,12 @@ const screens = {
     },
     viewPengajuan: {
         screen: viewPengajuan,
+        navigationOptions: {
+            headerShown: false,
+        }
+    },
+    viewPembaruan: {
+        screen: viewPembaruan,
         navigationOptions: {
             headerShown: false,
         }

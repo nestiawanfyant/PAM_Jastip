@@ -74,7 +74,7 @@ const homeScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </ScrollView>
                     <View style={styles.History}>
-                        <Text style={styles.textTitip}>Riwayat Barang yang kamu titipkan</Text>
+                        <Text style={styles.textTitip}>Barang yang kamu titipkan</Text>
                         <View style={styles.history}>
                             { 
                                 (dataKendaraan !== null) ? 

@@ -38,7 +38,7 @@ const riwayatPenitipan = ({ navigation }) => {
 
                 <View style={styles.History}>
                     <View style={styles.history}>
-                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory', { id:1, tag: "kendaraan"}) }}>
                             <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
                             <View style={styles.textCardHistory}>
                                 <Text style={styles.textHistoryTag}>#Rumah</Text>
@@ -48,7 +48,7 @@ const riwayatPenitipan = ({ navigation }) => {
                                 <Text style={styles.textHistoryTime}>Batas : 20 Mei 2021</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory', { id:1, tag: "kendaraan"}) }}>
                             <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
                             <View style={styles.textCardHistory}>
                                 <Text style={styles.textHistoryTag}>#Rumah</Text>
@@ -58,7 +58,7 @@ const riwayatPenitipan = ({ navigation }) => {
                                 <Text style={styles.textHistoryTime}>Batas : 20 Mei 2021</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory', { id:1, tag: "kendaraan"}) }}>
                             <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
                             <View style={styles.textCardHistory}>
                                 <Text style={styles.textHistoryTag}>#Rumah</Text>
@@ -68,7 +68,7 @@ const riwayatPenitipan = ({ navigation }) => {
                                 <Text style={styles.textHistoryTime}>Batas : 20 Mei 2021</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory', { id:1, tag: "kendaraan"}) }}>
                             <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
                             <View style={styles.textCardHistory}>
                                 <Text style={styles.textHistoryTag}>#Rumah</Text>
@@ -78,17 +78,7 @@ const riwayatPenitipan = ({ navigation }) => {
                                 <Text style={styles.textHistoryTime}>Batas : 20 Mei 2021</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
-                            <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
-                            <View style={styles.textCardHistory}>
-                                <Text style={styles.textHistoryTag}>#Rumah</Text>
-                                <Text style={styles.textHistoryTitle}>Rumah Pak Burhan</Text>
-                                <Text style={styles.textHistoryLocation}>Sukabumi, Bandar lampung</Text>
-                                <Text style={styles.textHistoryTime}>Barang Kondisi Aman - 19 Mei 2021</Text>
-                                <Text style={styles.textHistoryTime}>Batas : 20 Mei 2021</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory') }}>
+                        <TouchableOpacity style={styles.cardHistory} onPress={() => { navigation.navigate('ViewHistory', { id:1, tag: "kendaraan"}) }}>
                             <Image style={styles.imgHistory} source={{ uri: 'https://picsum.photos/200/300' }} />
                             <View style={styles.textCardHistory}>
                                 <Text style={styles.textHistoryTag}>#Rumah</Text>

@@ -128,7 +128,7 @@ const dashboard = ({ navigation }) => {
                                         <Text style={styles.lamaPenitipan} > Batas Penitipan : { datasKendaraan.batasPenitipan } </Text>
                                     </View>
                                     <View style={styles.viewButton}>
-                                        <TouchableOpacity style={styles.buttonCheck}>
+                                        <TouchableOpacity style={styles.buttonCheck} onPress={ () => navigation.navigate('viewPembaruan', { id:1, tag: "kendaraan"}) } >
                                             <Text style={styles.textButton}> Perbaharui </Text>
                                         </TouchableOpacity>
                                     </View>
@@ -137,7 +137,7 @@ const dashboard = ({ navigation }) => {
                         )
                     }
 
-                    <TouchableOpacity style={styles.buttonSelengkapnya}>
+                    <TouchableOpacity style={styles.buttonSelengkapnya} onPress={ () => { navigation.navigate('riwayatPenitipan') } }>
                         <Text style={styles.textSelengkapnya}> Selengkapnya </Text>
                     </TouchableOpacity>
                 </View>
